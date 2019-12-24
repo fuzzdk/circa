@@ -9,13 +9,13 @@ Circa is a RPN calculator for the terminal that was made as the author couldn't 
 
 Key        | Action
 ---------- | -------------
-0-9.       | number
+`0-9.`     | number
 n          | negate
 backspace  | backspace
 enter      | add to stack
-+          | add
--          | subtract
-*          | multiply
-/          | divide
-^          | y^x
+`+`        | add
+`-`        | subtract
+`*`        | multiply
+`/`        | divide
+`^`        | y^x
 ctrl-d,esc | leave program
