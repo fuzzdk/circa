@@ -59,6 +59,21 @@ void RPN::one_input_operator(const std::function<double(double) > &lambda)
   stack.push(res);
 }
 
+void RPN::drop()
+{
+  if (!entry.empty())
+  {
+    d.clear_line();
+    entry.clear();
+    return;
+  }
+  if (stack.size()<1)
+    return;
+  d.pop_line(); //line we are editing
+  d.clear_line(); //element
+  stack.pop(); 
+}
+
 
 
 void RPN::process_input(char ch)
@@ -101,6 +116,9 @@ void RPN::process_input(char ch)
       break;
     case 'n':
       one_input_operator([](double a){return -a;});
+      break;
+    case '\\':
+      drop();
       break;
  
     case 4: //ctrl-d

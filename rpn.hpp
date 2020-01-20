@@ -36,6 +36,7 @@ class RPN
   void enter(bool implicit);
   void two_input_operator(const std::function<double(double,double) > &lambda);
   void one_input_operator(const std::function<double(double) > &lambda);
+  void drop();
   
 
   public:

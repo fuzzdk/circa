@@ -89,3 +89,15 @@ TEST_CASE( "Negation", "[negation]" )
 {
   REQUIRE(process_input("2n").stack == vector<double>{-2.0});
 }
+
+
+TEST_CASE( "Drop", "[drop element]" ) 
+{
+  REQUIRE(process_input("\\").stack == vector<double>{});
+  REQUIRE(process_input("2\\").stack == vector<double>{});
+  REQUIRE(process_input("2\\").display == vector<string>{""});
+  REQUIRE(process_input("2\n\\").stack == vector<double>{});
+  REQUIRE(process_input("2\n\\").display == vector<string>{""});
+  REQUIRE(process_input("2\n3\\").stack == vector<double>{2});
+  REQUIRE(process_input("2\n3\\").display == vector<string>{"2.000000",""});
+}

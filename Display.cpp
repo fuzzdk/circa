@@ -26,6 +26,11 @@ Display::Display()
 {
 }
 
+void Display::clear_line()
+{
+  std::cout << "\r\e[K" << std::flush;
+}
+
 void Display::pop_line()
 {
   std::cout << "\r\e[K\e[A" << std::flush;

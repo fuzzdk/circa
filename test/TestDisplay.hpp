@@ -46,6 +46,10 @@ class TestDisplay:public DisplayI
       (*lines_.rbegin()).pop_back();
     }
 
+    void clear_line() override
+    {
+      (lines_.back())="";
+    }
 
   private:
     std::vector<std::string> lines_=std::vector<std::string>(1,"");

@@ -12,6 +12,7 @@ Key        | Action
 `0-9.`     | number
 n          | negate
 backspace  | backspace
+`\`        | drop
 enter      | add to stack
 `+`        | add
 `-`        | subtract

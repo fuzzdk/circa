@@ -13,6 +13,7 @@ class DisplayI
     virtual void add_line(const std::string &s) = 0;
     virtual void add_char(char ch) = 0;
     virtual void remove_last_char() = 0;
+    virtual void clear_line() = 0;
     virtual ~DisplayI() {};
 };
 
@@ -26,6 +27,7 @@ class Display: public DisplayI
     void add_line(const std::string &s) override;
     void add_char(char ch) override;
     void remove_last_char() override;
+    void clear_line() override;
 };
 
 #endif
