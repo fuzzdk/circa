@@ -24,5 +24,6 @@ add_global_arguments('-Wno-sign-compare', language : 'cpp')
 common = static_library('common','rpn.cpp','Display.cpp')
 
 executable('circa', 'main.cpp', link_with : common, install: true)
-executable('mtest', 'test/main.cpp','test/tests.cpp', link_with : common)
+mtest = executable('mtest', 'test/main.cpp','test/tests.cpp', link_with : common)
 
+test('mtest',mtest)
