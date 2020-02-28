@@ -21,6 +21,8 @@ project('circa', 'cpp', default_options : ['cpp_std=c++17'])
 
 add_global_arguments('-Wno-sign-compare', language : 'cpp')
 
-executable('circa', 'main.cpp','Display.cpp','rpn.cpp', install: true)
-executable('mtest', 'test/main.cpp','test/tests.cpp','rpn.cpp','Display.cpp')
+common = static_library('common','rpn.cpp','Display.cpp')
+
+executable('circa', 'main.cpp', link_with : common, install: true)
+executable('mtest', 'test/main.cpp','test/tests.cpp', link_with : common)
 
