@@ -47,6 +47,10 @@ TEST_CASE( "Display", "[display]" ) {
   REQUIRE(process_input("2\n\n").display == vector<string>{"2.000000","2.000000",""});
   REQUIRE(process_input("2\n2+").display == vector<string>{"4.000000",""});
 }
+TEST_CASE( "Input", "[input numbers]" ) {
+  REQUIRE(process_input(".23").display == vector<string>{".23"});
+  REQUIRE(process_input("1.2.3").display == vector<string>{"1.23"});
+}
 
 TEST_CASE( "Backspace", "[backspace]" ) {
   REQUIRE(process_input("1\b2\n").stack == vector<double>{2.0});

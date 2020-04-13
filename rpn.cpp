@@ -91,6 +91,8 @@ void RPN::process_input(char ch)
     case '8':
     case '9':
     case '.':
+      if (ch=='.' && entry.find(".")!=std::string::npos)
+        return;
       entry+=ch;
       d.add_char(ch);
       //std::cout << ch;
