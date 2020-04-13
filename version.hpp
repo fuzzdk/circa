@@ -1,5 +1,5 @@
 /*
-Copyright 2019-2020 Anders Bo Rasmussen
+Copyright 2020 Anders Bo Rasmussen
 
 This file is part of circa.
 
@@ -17,20 +17,5 @@ This file is part of circa.
     along with circa.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#include "Display.hpp"
-#include "rpn.hpp"
-#include "version.hpp"
+const std::string version="0.0.3";
 
-int main()
-{
-  Display d;
-  RPN rpn(d);
-
-  d.add_line("circa "+version);
-  d.add_line("-----------");
-
-  while (char ch=read_char())
-  {
-    rpn.process_input(ch);
-  }
-}
