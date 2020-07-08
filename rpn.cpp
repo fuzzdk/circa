@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Anders Bo Rasmussen
+Copyright 2019-2020 Anders Bo Rasmussen
 
 This file is part of circa.
 
@@ -95,8 +95,6 @@ void RPN::process_input(char ch)
         return;
       entry+=ch;
       d.add_char(ch);
-      //std::cout << ch;
-      //std::cout.flush();
       break;
     case 10: //enter
       enter(false);
@@ -132,10 +130,6 @@ void RPN::process_input(char ch)
         return;
       entry.pop_back();
       d.remove_last_char();
-      //std::cout << ch; std::cout << " "; std::cout << ch; std::cout << std::flush;
-
   }
-  //    }
-  //    return 0;
 }
 
