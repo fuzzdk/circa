@@ -17,5 +17,5 @@ This file is part of circa.
     along with circa.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const std::string version="0.0.3";
+const std::string version="0.0.4";
 
