@@ -127,6 +127,7 @@ void RPN::process_input(char ch)
     case 27: //esc
       exit(0);
     case 8: //backspace
+    case 127:
       if (entry.empty())
         return;
       entry.pop_back();
