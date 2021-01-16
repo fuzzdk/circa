@@ -10,6 +10,7 @@ Circa is a RPN calculator for the terminal that was made as the author couldn't 
 Key        | Action
 ---------- | -------------
 `0-9.`     | number
+u          | undo
 n          | negate
 backspace  | backspace
 `\`        | drop

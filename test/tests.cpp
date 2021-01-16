@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Anders Bo Rasmussen
+Copyright 2019-2021 Anders Bo Rasmussen
 
 This file is part of circa.
 
@@ -104,4 +104,27 @@ TEST_CASE( "Drop", "[drop element]" )
   REQUIRE(process_input("2\n\\").display == vector<string>{""});
   REQUIRE(process_input("2\n3\\").stack == vector<double>{2});
   REQUIRE(process_input("2\n3\\").display == vector<string>{"2.000000",""});
+}
+
+TEST_CASE( "Undo 0", "[undo literal input]" ) {
+REQUIRE(process_input("u").stack == vector<double>{});
+REQUIRE(process_input("2\nu").stack == vector<double>{});
+REQUIRE(process_input("2\n3\nu").stack == vector<double>{2.0});
+}
+
+TEST_CASE( "Undo 1", "[undo 1 input functions]" ) {
+REQUIRE(process_input("1nu").stack == vector<double>{1.0});
+REQUIRE(process_input("2\n\nu").stack == vector<double>{2.0});
+REQUIRE(process_input("2\n\nuu").stack == vector<double>{});
+}
+
+TEST_CASE( "Undo 2", "[undo 2 input functions]" ) {
+REQUIRE(process_input("2\n3+u").stack == vector<double>{2.0,3.0});
+REQUIRE(process_input("1\n2\n3+u").stack == vector<double>{1.0,2.0,3.0});
+}
+
+
+TEST_CASE( "Undo multi level", "[undo multiple times]" ) {
+REQUIRE(process_input("1nuu").stack == vector<double>{});
+REQUIRE(process_input("1uu").stack == vector<double>{});
 }

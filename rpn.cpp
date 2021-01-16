@@ -1,5 +1,5 @@
 /*
-Copyright 2019-2020 Anders Bo Rasmussen
+Copyright 2019-2021 Anders Bo Rasmussen
 
 This file is part of circa.
 
@@ -29,10 +29,15 @@ void RPN::enter(bool implicit)
     double v=stack.last();
     stack.push(v);
     d.add_line(std::to_string(v));
+    Change change({v},{});
+    history_.add_change(change);
     return;
   }
-  stack.push(entry);
+  double v=stack.push(entry);
   d.add_line(std::to_string(stack.last()));
+
+  Change change({v},{});
+  history_.add_change(change);
   entry="";
 }
 
@@ -43,7 +48,11 @@ void RPN::two_input_operator(const std::function<double(double,double) > &lambda
     return;
   d.pop_line();
   d.pop_line();
-  double res=lambda(stack.pop(),stack.pop());
+  const double elem2=stack.pop();
+  const double elem1=stack.pop();
+  const double res=lambda(elem1,elem2);
+  Change change({res},{elem1,elem2});
+  history_.add_change(change);
   d.add_line(std::to_string(res));
   stack.push(res);
 }
@@ -54,9 +63,31 @@ void RPN::one_input_operator(const std::function<double(double) > &lambda)
   if (stack.size()<1)
     return;
   d.pop_line();
-  double res=lambda(stack.pop());
+  const double elem=stack.pop();
+  double res=lambda(elem);
+  Change change({res},{elem});
+  history_.add_change(change);
   d.add_line(std::to_string(res));
   stack.push(res);
+}
+
+void RPN::undo()
+{
+  enter(true);
+  if (history_.empty())
+    return;
+  Change change=history_.pop_change();
+  for(int i=0;i<change.get_push().size();++i)
+  {
+    d.pop_line();
+    d.clear_line();
+    stack.pop();
+  }
+  for(double push : change.get_pop())
+  {
+    d.add_line(std::to_string(push));
+    stack.push(push);
+  }
 }
 
 void RPN::drop()
@@ -116,6 +147,9 @@ void RPN::process_input(char ch)
       break;
     case 'n':
       one_input_operator([](double a){return -a;});
+      break;
+    case 'u':
+      undo();
       break;
     case '\\':
       drop();
