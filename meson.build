@@ -1,4 +1,4 @@
-#Copyright 2019 Anders Bo Rasmussen
+#Copyright 2019-2021 Anders Bo Rasmussen
 
 #This file is part of circa.
 
@@ -17,13 +17,14 @@
 
 project('circa', 'cpp', default_options : ['cpp_std=c++17'])
 
-#boost_dep = dependency('boost')
+boost_dep = dependency('boost', modules : ['program_options'])
+spdlog_dep = dependency('spdlog')
 
 add_global_arguments('-Wno-sign-compare', language : 'cpp')
 
-common = static_library('common','rpn.cpp','Display.cpp')
+common = static_library('common','rpn.cpp','Display.cpp', dependencies : [spdlog_dep, boost_dep])
 
-executable('circa', 'main.cpp', link_with : common, install: true)
+executable('circa', 'main.cpp', link_with : common, install: true, dependencies : [spdlog_dep])
 mtest = executable('mtest', 'test/main.cpp','test/tests.cpp', link_with : common)
 
 test('mtest',mtest)

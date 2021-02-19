@@ -1,5 +1,5 @@
 /*
-Copyright 2019-2020 Anders Bo Rasmussen
+Copyright 2019-2021 Anders Bo Rasmussen
 
 This file is part of circa.
 
@@ -20,17 +20,55 @@ This file is part of circa.
 #include "Display.hpp"
 #include "rpn.hpp"
 #include "version.hpp"
+#include <spdlog/spdlog.h>
+#include <spdlog/sinks/basic_file_sink.h>
+#include <boost/program_options.hpp>
 
-int main()
+namespace po = boost::program_options;
+
+int main(int argc, char **argv)
 {
+  const std::string version_str = "circa "+version;
+  po::options_description desc("Allowed options");
+  std::string debug_out;
+  desc.add_options()
+      ("help", "produce help message")
+      ("version", "print version")
+      ("debug_out", po::value<std::string>(&debug_out), "file to output debug to")
+  ;
+
+  po::variables_map vm;
+  po::store(po::parse_command_line(argc, argv, desc), vm);
+  po::notify(vm);
+
+  if (vm.count("help"))
+  {
+    std::cout << desc << "\n";
+    return 0;
+  }
+  if (vm.count("version"))
+  {
+    std::cout << version_str << "\n";
+    return 0;
+  }
+
+  if (vm.count("debug_out"))
+  {
+    auto sink = std::make_shared<spdlog::sinks::basic_file_sink_st>(debug_out,true);
+    auto my_logger= std::make_shared<spdlog::logger>("main", sink);
+    spdlog::set_default_logger(my_logger);
+    my_logger->set_level(spdlog::level::debug);
+  }
+
   Display d;
   RPN rpn(d);
 
-  d.add_line("circa "+version);
+  d.add_line(version_str);
   d.add_line("-----------");
 
   while (char ch=read_char())
   {
+    spdlog::debug("Got input: '{}'({})",ch >= 32 ? ch : '?',int(ch));
     rpn.process_input(ch);
   }
 }
