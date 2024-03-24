@@ -1,5 +1,5 @@
 /*
-Copyright 2020 Anders Bo Rasmussen
+Copyright 2020-2024 Anders Bo Rasmussen
 
 This file is part of circa.
 
@@ -17,5 +17,5 @@ This file is part of circa.
     along with circa.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-const std::string version="0.0.4";
+const std::string version="0.0.5";
 
